@@ -72,10 +72,10 @@ bash
 python manage.py runserver
 Visit: http://127.0.0.1:8000
 
-🧪 Test Login Credentials (Optional)
-Username: admin
+🧪 Test Login Credentials
+Username: testuser2
 
-Password: admin123
+Password: 12345678
 
 📄 Bonus: Client Report
 Visit the /report route to view a list of all clients. You can also export the list as a PDF.
