@@ -1,0 +1,58 @@
+{% load static %}
+<!-- edit_client.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Client</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+            <h2 class="text-2xl font-semibold mb-6">✏️ Edit Client</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1">Name</label>
+                        <input type="text" name="name" value="{{ client.name }}" required class="w-full border rounded p-2" />
+                    </div>
+                    <div>
+                        <label class="block mb-1">Email</label>
+                        <input type="email" name="email" value="{{ client.email }}" class="w-full border rounded p-2" />
+                    </div>
+                    <div>
+                        <label class="block mb-1">Phone</label>
+                        <input type="text" name="phone" value="{{ client.phone }}" class="w-full border rounded p-2" />
+                    </div>
+                    <div>
+                        <label class="block mb-1">Company</label>
+                        <input type="text" name="company" value="{{ client.company }}" class="w-full border rounded p-2" />
+                    </div>
+                    <div>
+                        <label class="block mb-1">Onboarding Date</label>
+                        <input type="date" name="onboarding_date" value="{{ client.onboarding_date|date:'Y-m-d' }}" class="w-full border rounded p-2" />
+                    </div>
+                    <div>
+                        <label class="block mb-1">Status</label>
+                        <select name="status" class="w-full border rounded p-2">
+                            {% for choice in client.STATUS_CHOICES %}
+                                <option value="{{ choice.0 }}" {% if client.status == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-1">Services Required</label>
+                        <textarea name="services_required" rows="4" class="w-full border rounded p-2">{{ client.services_required }}</textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Update</button>
+                    <a href="{% url 'dashboard' %}" class="text-gray-600 hover:underline">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
