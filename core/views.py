@@ -6,23 +6,28 @@ from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 def login_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user:
+        if user is not None:
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
+            messages.error(request, "Invalid username or password.")  # ⛔ Login failed
+            return redirect('login')  # Or re-render login with context
     return render(request, 'login.html')
+
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    messages.success(request, "You have been logged out successfully.")
+    return redirect('login')  # Or wherever your login view is
+
 
 @login_required
 def dashboard(request):
