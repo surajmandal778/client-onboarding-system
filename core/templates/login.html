@@ -1,38 +1,96 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Login - Client Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'core/style.css' %}">
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}" />
+    <style>
+      .toast {
+        animation: slideIn 0.5s ease, fadeOut 0.5s ease 4s forwards;
+      }
 
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">🔐 Login for employe</h2>
-        <form method="post" class="space-y-4">
-            {% csrf_token %}
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
 
-            {% if form.non_field_errors %}
-                <div class="text-red-500 text-sm">{{ form.non_field_errors }}</div>
-            {% endif %}
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
 
-            <div>
-                <label for="username" class="block text-gray-700">Username</label>
-                <input type="text" name="username" id="username" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-            </div>
-
-            <div>
-                <label for="password" class="block text-gray-700">Password</label>
-                <input type="password" name="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-            </div>
-
-            <div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">Login</button>
-            </div>
-        </form>
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 space-y-2 z-50">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="toast max-w-xs w-full text-white px-4 py-3 rounded shadow-md
+            {% if message.tags == 'error' %}bg-red-600
+            {% elif message.tags == 'success' %}bg-green-600
+            {% elif message.tags == 'warning' %}bg-yellow-500
+            {% else %}bg-blue-600{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
 
-</body>
+    <!-- Login Box -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">
+        🔐 Login for Employee
+      </h2>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="text-red-500 text-sm">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div>
+          <label for="username" class="block text-gray-700">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-gray-700">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </body>
 </html>
