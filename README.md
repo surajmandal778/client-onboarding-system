@@ -65,7 +65,7 @@ bash
 python manage.py makemigrations
 python manage.py migrate
 
-🔑 Superuser Creation (Optional for Admin Access)
+🔑 Superuser Creation
 bash
 
 python manage.py createsuperuser
@@ -76,9 +76,11 @@ python manage.py runserver
 Visit: http://127.0.0.1:8000
 
 🧪 Test Login Credentials
-Username: testuser2
+python manage.py create_test_user this create test user
 
-Password: 12345678
+testuser
+testpass123
+
 
 📄 Bonus: Client Report
 Visit the /report route to view a list of all clients. You can also export the list as a PDF.
