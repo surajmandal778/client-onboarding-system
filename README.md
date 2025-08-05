@@ -34,7 +34,7 @@ source env/bin/activate  # macOS/Linux
 bash
 pip install -r requirements.txt
 4. Set up environment variables
-Create a .env file in the project root with the following:
+make changes to .env file in the project root with the following:
 
 ini
 
@@ -50,7 +50,10 @@ DEBUG=True
 🛠️ Database Setup
 You can either:
 
-Run the included schema.sql in MySQL:
+Run the included schema.sql in MySQL
+
+or
+make a database using "create database <db_name>;
 
 bash
 
